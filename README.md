@@ -91,7 +91,7 @@ C22 = A21×B12 + A22×B22
 ```
 
 ### как это работает в коде
-- 1. Определение количества блоков
+-  Определение количества блоков
 ```bash
 // В функции multiplyBlockedThreads:
 std::vector<BlockTask> tasks;
@@ -101,3 +101,14 @@ for (int i = 0; i < n; i += blockSize) {
     }
 }
 ```
+
+blockSize - это размер подматрицы (блока)
+
+в коде все данные задаются вот так
+```bash
+    std::vector<int> numThreads = {1, 2, 4, 8, 12, 16};
+    std::vector<int> matrixSizes = {256, 512, 1024};
+    std::vector<int> blockSizes = {16, 32, 64, 128};
+```
+### Класс и функции
+
