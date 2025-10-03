@@ -89,3 +89,15 @@ C12 = A11×B12 + A12×B22
 C21 = A21×B11 + A22×B21
 C22 = A21×B12 + A22×B22
 ```
+
+### как это работает в коде
+- 1. Определение количества блоков
+```bash
+// В функции multiplyBlockedThreads:
+std::vector<BlockTask> tasks;
+for (int i = 0; i < n; i += blockSize) {
+    for (int j = 0; j < n; j += blockSize) {
+        tasks.push_back(BlockTask{i, j});
+    }
+}
+```
