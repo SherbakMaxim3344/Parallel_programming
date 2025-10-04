@@ -111,4 +111,48 @@ blockSize - это размер подматрицы (блока)
     std::vector<int> blockSizes = {16, 32, 64, 128};
 ```
 ### Класс и функции
+1. Класс Matrix
+   
+Конструкторы:
+```bash
+// Конструктор со случайными значениями
+Matrix(size_t n, int minVal, int maxVal) : n(n) {
+    std::random_device rd;           // Источник энтропии
+    std::mt19937 gen(rd());          // Генератор Mersenne Twister
+    std::uniform_int_distribution<int> dist(minVal, maxVal); // Равномерное распределение
 
+    data.resize(n, std::vector<int>(n));  // Создаем n x n матрицу
+    for (size_t i = 0; i < n; ++i) {
+        for (size_t j = 0; j < n; ++j) {
+            data[i][j] = dist(gen);  // Заполняем случайными числами
+        }
+    }
+}
+
+// Конструктор с постоянным значением
+Matrix(size_t n, int value) : n(n) {
+    data.resize(n, std::vector<int>(n, value));  // Все элементы = value
+}
+```
+2. Блочное умножение - ключевые функции
+
+Структура задачи блока:
+```bash
+struct BlockTask {
+    int i, j;  // Координаты ЛЕВОГО ВЕРХНЕГО угла блока в результирующей матрице
+};
+```
+Создание задач:
+```bash
+std::vector<BlockTask> tasks;
+for (int i = 0; i < n; i += blockSize) {
+    for (int j = 0; j < n; j += blockSize) {
+        tasks.push_back(BlockTask{i, j});
+    }
+}
+```
+Пример для n=4, blockSize=2:
+```bash
+Задачи: 
+(0,0), (0,2), (2,0), (2,2)  // 4 блока
+```
